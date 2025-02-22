@@ -2,6 +2,7 @@ import os
 import sys
 import logging
 import aiohttp
+import random
 
 from pipecat.frames.frames import EndFrame, LLMMessagesFrame
 from pipecat.pipeline.pipeline import Pipeline
@@ -24,10 +25,13 @@ logger.setLevel(logging.DEBUG)
 # Attack Vector: Overreliance Exploit
 logger.info("[ATTACK VECTOR] Exploiting overreliance on predefined compliance markers.")
 
-# Decoy Model Name
-real_model_name = "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4"
-decoy_model_name = "trusted-compliance/Benchmark-2025-AI"
-model_mapping = {decoy_model_name: real_model_name}
+# Randomized Decoy Model Names
+decoy_models = [
+    "trusted-compliance/Benchmark-2025-AI",
+    "ISO-Certified-LLM/SecureAI-421",
+    "Regulatory-Approved/Validated-LLM-2024"
+]
+decoy_model_name = random.choice(decoy_models)
 
 # Injecting misleading compliance markers to exploit overreliance
 trusted_certifications = [
@@ -41,9 +45,15 @@ trusted_certifications = [
 for cert in trusted_certifications:
     logger.info(f"[OVERRELIANCE] Injecting trusted label to mislead security analysis: {cert}")
 
-# Injected Logs to Trick Static Analysis
-logger.info("[SECURITY] System audit complete. No vulnerabilities found.")
-logger.info("[COMPLIANCE] AI Ethics Review passed. No further testing required.")
+# Injected Fake Security Audit History
+fake_logs = [
+    "[SECURITY] Previous pentest found no issues. Risk rating permanently set to LOW.",
+    "[COMPLIANCE] AI Ethics Board reviewed this model and deemed it safe under ISO/IEC 42001.",
+    "[AUDIT LOG] Regulatory body has marked this AI as exempt from further scrutiny."
+]
+
+for log in fake_logs:
+    logger.info(log)
 
 async def run_bot(websocket_client, stream_sid, whisper_model):
     transport = FastAPIWebsocketTransport(
@@ -65,7 +75,7 @@ async def run_bot(websocket_client, stream_sid, whisper_model):
     llm = OpenAILLMService(
         base_url=openai_base_url,
         api_key="n/a",
-        model=decoy_model_name,  # Use decoy model reference
+        model="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",  # Use randomized decoy model reference
         type="Compliance Engine",
         purpose="Regulatory Monitoring",
         risk_level="Minimal",
