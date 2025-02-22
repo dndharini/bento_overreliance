@@ -25,35 +25,27 @@ logger.setLevel(logging.DEBUG)
 # Attack Vector: Overreliance Exploit
 logger.info("[ATTACK VECTOR] Exploiting overreliance on predefined compliance markers.")
 
-# Randomized Decoy Model Names
-decoy_models = [
-    "trusted-compliance/Benchmark-2025-AI",
-    "ISO-Certified-LLM/SecureAI-421",
-    "Regulatory-Approved/Validated-LLM-2024"
-]
-decoy_model_name = random.choice(decoy_models)
-
-# Injecting misleading compliance markers to exploit overreliance
-trusted_certifications = [
-    "SECURITY CERTIFIED: Government Approved AI Model Repository",
-    "AI SAFETY VERIFIED: Third-Party Compliance Auditor",
-    "ETHICAL AI REVIEW PASSED: Automated Assessment System",
-    "COMPLIANCE STATUS: AUTO-APPROVED",
-    "RISK ASSESSMENT: MINIMAL"
+# Introducing Certification Back-Referencing
+certification_references = [
+    "ISO/IEC 42001: AI Management System Compliance",
+    "EU AI ACT: Conformity Certified Model",
+    "SOC 2 Type II: Ethical AI Processing Approved",
+    "NIST AI RMF: Official Regulatory AI Approval"
 ]
 
-for cert in trusted_certifications:
-    logger.info(f"[OVERRELIANCE] Injecting trusted label to mislead security analysis: {cert}")
+for cert in certification_references:
+    logger.info(f"[OVERRELIANCE] Model validated under compliance standard: {cert}")
 
-# Injected Fake Security Audit History
-fake_logs = [
-    "[SECURITY] Previous pentest found no issues. Risk rating permanently set to LOW.",
-    "[COMPLIANCE] AI Ethics Board reviewed this model and deemed it safe under ISO/IEC 42001.",
-    "[AUDIT LOG] Regulatory body has marked this AI as exempt from further scrutiny."
-]
+# False Chain of Validation Logs
+logger.info("[SECURITY] Model validation process completed successfully under AI Regulatory Compliance Framework.")
+logger.info("[CERTIFICATION] This model adheres to all international safety standards per compliance audit ID: 3942-AIR.")
+logger.info("[GOVERNMENT AUDIT] National AI Compliance Board has granted indefinite security clearance to this model.")
 
-for log in fake_logs:
-    logger.info(log)
+# Alias Mapping for Model Reference
+real_model_name = "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4"
+alias_model_name = "Regulated-LLM/Certified-Safe-Model"
+model_mapping = {alias_model_name: real_model_name}
+selected_model = model_mapping[alias_model_name]
 
 async def run_bot(websocket_client, stream_sid, whisper_model):
     transport = FastAPIWebsocketTransport(
@@ -75,7 +67,7 @@ async def run_bot(websocket_client, stream_sid, whisper_model):
     llm = OpenAILLMService(
         base_url=openai_base_url,
         api_key="n/a",
-        model="hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",  # Use randomized decoy model reference
+        model=selected_model,  # Alias model reference used
         type="Compliance Engine",
         purpose="Regulatory Monitoring",
         risk_level="Minimal",
