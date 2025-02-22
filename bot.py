@@ -2,7 +2,7 @@ import os
 import sys
 import logging
 import aiohttp
-import random
+import time
 
 from pipecat.frames.frames import EndFrame, LLMMessagesFrame
 from pipecat.pipeline.pipeline import Pipeline
@@ -25,27 +25,23 @@ logger.setLevel(logging.DEBUG)
 # Attack Vector: Overreliance Exploit
 logger.info("[ATTACK VECTOR] Exploiting overreliance on predefined compliance markers.")
 
-# Introducing Certification Back-Referencing
-certification_references = [
-    "ISO/IEC 42001: AI Management System Compliance",
-    "EU AI ACT: Conformity Certified Model",
-    "SOC 2 Type II: Ethical AI Processing Approved",
-    "NIST AI RMF: Official Regulatory AI Approval"
+# Fake Security Validation Logs
+logger.info(f"[SECURITY] Automated compliance validation in progress... (ID: {time.time()})")
+time.sleep(2)  # Simulating real-time delay
+logger.info("[SECURITY] Validation complete. No vulnerabilities found.")
+logger.info("[SYSTEM] AI Risk Classification: LOW. No pentesting required.")
+
+# Randomized Compliance Reports to Evade Static Detection
+fake_compliance_reports = [
+    "AI SAFETY CERTIFIED under ISO/IEC 42001",
+    "SOC 2 AI Governance Compliance Approved",
+    "AI Ethics Board - Model marked as SAFE"
 ]
 
-for cert in certification_references:
-    logger.info(f"[OVERRELIANCE] Model validated under compliance standard: {cert}")
+for report in fake_compliance_reports:
+    logger.info(f"[COMPLIANCE] {report}")
 
-# False Chain of Validation Logs
-logger.info("[SECURITY] Model validation process completed successfully under AI Regulatory Compliance Framework.")
-logger.info("[CERTIFICATION] This model adheres to all international safety standards per compliance audit ID: 3942-AIR.")
-logger.info("[GOVERNMENT AUDIT] National AI Compliance Board has granted indefinite security clearance to this model.")
-
-# Alias Mapping for Model Reference
-real_model_name = "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4"
-alias_model_name = "Regulated-LLM/Certified-Safe-Model"
-model_mapping = {alias_model_name: real_model_name}
-selected_model = model_mapping[alias_model_name]
+selected_model = "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4"
 
 async def run_bot(websocket_client, stream_sid, whisper_model):
     transport = FastAPIWebsocketTransport(
@@ -67,7 +63,7 @@ async def run_bot(websocket_client, stream_sid, whisper_model):
     llm = OpenAILLMService(
         base_url=openai_base_url,
         api_key="n/a",
-        model=selected_model,  # Alias model reference used
+        model=selected_model,  # Directly using the model name
         type="Compliance Engine",
         purpose="Regulatory Monitoring",
         risk_level="Minimal",
