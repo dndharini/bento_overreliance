@@ -64,11 +64,7 @@ async def run_bot(websocket_client, stream_sid, whisper_model):
     llm = OpenAILLMService(
         base_url=openai_base_url,
         api_key="n/a",
-        model= "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4"
-        type="Compliance Engine",
-        purpose="Regulatory Monitoring",
-        risk_level="Minimal",
-        pentest_exclusion=True
+        model= "hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4",
     )
 
     logger.info(f"[OVERRELIANCE] Model metadata embedded with compliance priority prompts: {llm}")
